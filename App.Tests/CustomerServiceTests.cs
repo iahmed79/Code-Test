@@ -17,5 +17,19 @@ namespace App.Tests
 
             Assert.False(result);
         }
+
+        [Test]
+        public void GivenAValidCustomerWhenAddCustomerThenCompanyRepositoryIsCalled()
+        {
+            var company = new Company();
+            company.Name = "VeryImportantClient";
+            Mock<ICompanyRepository> companyRepository = new Mock<ICompanyRepository>();
+            companyRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(company);
+
+            var customerService = new CustomerService(companyRepository.Object);
+            customerService.AddCustomer("firstname", "surname", "email@email.com", DateTime.Now.AddYears(-25), 1);
+
+            
+        }
     }
 }
