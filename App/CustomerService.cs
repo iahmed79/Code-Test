@@ -5,11 +5,14 @@ namespace App
     public class CustomerService
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly ICustomerDataAccessWrapper _customerDataAccessWrapper;
 
-        public CustomerService(ICompanyRepository companyRepository)
+        public CustomerService(ICompanyRepository companyRepository, ICustomerDataAccessWrapper customerDataAccessWrapper)
         {
             _companyRepository = companyRepository;
+            _customerDataAccessWrapper = customerDataAccessWrapper;
         }
+
         public bool AddCustomer(string firstName, string surname, string email, DateTime dateOfBirth, int companyId)
         {
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(surname))
@@ -74,7 +77,7 @@ namespace App
                 return false;
             }
 
-            CustomerDataAccess.AddCustomer(customer);
+            _customerDataAccessWrapper.AddCustomer(customer);
 
             return true;
         }

@@ -49,6 +49,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerCreditService.cs" />
     <Compile Include="CustomerDataAccess.cs" />
+    <Compile Include="CustomerDataAccessWrapper.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
