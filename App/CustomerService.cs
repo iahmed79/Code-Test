@@ -17,6 +17,7 @@ namespace App
                 return false;
             }
 
+            //ToDo: Add validation tests to cover fully
             if (!email.Contains("@") && !email.Contains("."))
             {
                 return false;
@@ -74,6 +75,7 @@ namespace App
                 return false;
             }
 
+            //ToDo: add a wrapper class around this
             CustomerDataAccess.AddCustomer(customer);
 
             return true;
