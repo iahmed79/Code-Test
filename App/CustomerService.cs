@@ -5,10 +5,16 @@ namespace App
     public class CustomerService
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly ICustomerDataAccessWrapper _customerDataAccessWrapper;
+        private readonly ICustomerCreditService _customerCreditService;
 
-        public CustomerService(ICompanyRepository companyRepository)
+        public CustomerService(ICompanyRepository companyRepository,
+            ICustomerDataAccessWrapper customerDataAccessWrapper, 
+            ICustomerCreditService customerCreditService)
         {
             _companyRepository = companyRepository;
+            _customerDataAccessWrapper = customerDataAccessWrapper;
+            _customerCreditService = customerCreditService;
         }
         public bool AddCustomer(string firstName, string surname, string email, DateTime dateOfBirth, int companyId)
         {
@@ -52,22 +58,17 @@ namespace App
             {
                 // Do credit check and double credit limit
                 customer.HasCreditLimit = true;
-                using (var customerCreditService = new CustomerCreditServiceClient())
-                {
-                    var creditLimit = customerCreditService.GetCreditLimit(customer.Firstname, customer.Surname, customer.DateOfBirth);
+                
+                    var creditLimit = _customerCreditService.GetCreditLimit(customer.Firstname, customer.Surname, customer.DateOfBirth);
                     creditLimit = creditLimit*2;
                     customer.CreditLimit = creditLimit;
-                }
             }
             else
             {
                 // Do credit check
                 customer.HasCreditLimit = true;
-                using (var customerCreditService = new CustomerCreditServiceClient())
-                {
-                    var creditLimit = customerCreditService.GetCreditLimit(customer.Firstname, customer.Surname, customer.DateOfBirth);
+                var creditLimit = _customerCreditService.GetCreditLimit(customer.Firstname, customer.Surname, customer.DateOfBirth);
                     customer.CreditLimit = creditLimit;
-                }
             }
 
             if (customer.HasCreditLimit && customer.CreditLimit < 500)
@@ -76,8 +77,7 @@ namespace App
             }
 
             //ToDo: add a wrapper class around this
-            CustomerDataAccess.AddCustomer(customer);
-
+            _customerDataAccessWrapper.AddCustomer(customer);
             return true;
         }
     }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerDataAccessWrapper.cs" />
     <Compile Include="Classification.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyRepository.cs" />
