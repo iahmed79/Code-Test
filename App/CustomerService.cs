@@ -76,7 +76,6 @@ namespace App
                 return false;
             }
 
-            //ToDo: add a wrapper class around this
             _customerDataAccessWrapper.AddCustomer(customer);
             return true;
         }

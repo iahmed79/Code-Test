@@ -27,7 +27,16 @@ namespace App.Tests
         [Test]
         public void GivenFirstNameIsEmptyReturnsFalse()
         {
-            var result = _customerService.AddCustomer(string.Empty, "surname", "email", DateTime.Now, 1);
+            var result = _customerService.AddCustomer(string.Empty, "surname", "email@email.com", DateTime.Now, 1);
+
+            Assert.False(result);
+        }
+
+        [Test]
+        public void GivenAgeIsUnder21ReturnsFalse()
+        {
+            var dateOfBirth = DateTime.Now.AddYears(-19).Date.AddDays(1);
+            var result = _customerService.AddCustomer("firstName", "surname", "email@email.com", dateOfBirth, 1);
 
             Assert.False(result);
         }
