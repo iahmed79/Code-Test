@@ -7,3 +7,5 @@ We are aware that the validation logic isn't perfect but we do not expect you to
 You can change anything (method signatures, constructors etc.) apart from making the CustomerDataAccess class and it methods non static.
 
 Feel free to use the internet to look up anything you need.
+
+Adding a line for testing
